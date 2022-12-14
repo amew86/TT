@@ -1,6 +1,6 @@
 package cn.amew.tt.demo
 
-import cn.amew.tt.annotation.TRoute
+import cn.amew.tt.annotation.TTRoute
 
 /**
  * Author:      A-mew
@@ -9,6 +9,6 @@ import cn.amew.tt.annotation.TRoute
  * Modified By:
  * Description:
  */
-@TRoute(path = "pathB", level = 1)
+@TTRoute(path = "pathB", level = 1)
 class BTestCaseOverride {
 }

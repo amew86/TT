@@ -1,6 +1,6 @@
 package cn.amew.tt.processor
 
-import cn.amew.tt.annotation.TRoute
+import cn.amew.tt.annotation.TTRoute
 import com.google.auto.service.AutoService
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.TypeSpec
@@ -35,7 +35,7 @@ class TTProcessor: AbstractProcessor() {
     }
 
     override fun process(annotations: MutableSet<out TypeElement>?, roundEnv: RoundEnvironment?): Boolean {
-        roundEnv?.getElementsAnnotatedWith(TRoute::class.java)?.forEach { classElement ->
+        roundEnv?.getElementsAnnotatedWith(TTRoute::class.java)?.forEach { classElement ->
             val qualifiedName = (classElement as TypeElement).qualifiedName
             val wrapperClassName = "${classElement.simpleName}__TTWrapper"
 
@@ -55,5 +55,5 @@ class TTProcessor: AbstractProcessor() {
 
     override fun getSupportedSourceVersion() = SourceVersion.RELEASE_8
 
-    override fun getSupportedAnnotationTypes() = hashSetOf(TRoute::class.java.name)
+    override fun getSupportedAnnotationTypes() = hashSetOf(TTRoute::class.java.name)
 }

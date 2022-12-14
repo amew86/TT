@@ -44,7 +44,7 @@ class TTClassVisitor(
 ) : ClassVisitor(Opcodes.ASM5, nextVisitor) {
 
     override fun visitAnnotation(descriptor: String?, visible: Boolean): AnnotationVisitor {
-        if (descriptor == "Lcn/amew/tt/annotation/TRoute;") {
+        if (descriptor == "Lcn/amew/tt/annotation/TTRoute;") {
             return TTAnnotationVisitor(classContext.currentClassData.className, api)
         }
         return super.visitAnnotation(descriptor, visible)

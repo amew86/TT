@@ -7,7 +7,7 @@ package cn.amew.tt.annotation
  * Modified By:
  * Description:
  */
-annotation class TRoute(
+annotation class TTRoute(
     val path: String,
     val type: RouteType = RouteType.NONE,
     val level: Int = 0

@@ -41,5 +41,6 @@ dependencies {
 
     implementation project(":_demolib")
     implementation project(":tt_annotation")
+    implementation project(":tt_core")
     kapt project(":tt_processor")
 }
