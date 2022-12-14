@@ -1,4 +1,4 @@
-package cn.amew.tpagerouter.plugin
+package cn.amew.tt.plugin
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -14,10 +14,9 @@ import java.io.FileWriter
  * Modified By:
  * Description:
  */
-class TPageRouterModuleWriter private constructor(val currentPath: String) {
+class TTModuleWriter private constructor(val currentPath: String) {
 
-    private val existRouterPaths = HashSet<String>()
-    private val allRouterModules = HashSet<TPageRouterModuleBean>()
+    private val allRouterModules = LinkedHashSet<TPageRouterModuleBean>()
     private val gson = Gson()
     private var file: File = File(currentPath)
 
@@ -33,11 +32,10 @@ class TPageRouterModuleWriter private constructor(val currentPath: String) {
                     jsonStr.append(line)
                 }
                 if (jsonStr.isNotEmpty()) {
-                    val routerModules = gson.fromJson<HashSet<TPageRouterModuleBean>>(
+                    val routerModules = gson.fromJson<LinkedHashSet<TPageRouterModuleBean>>(
                         jsonStr.toString(),
-                        object : TypeToken<HashSet<TPageRouterModuleBean>>() {}.type
+                        object : TypeToken<LinkedHashSet<TPageRouterModuleBean>>() {}.type
                     )
-                    existRouterPaths.addAll(routerModules.map { it.path })
                     allRouterModules.addAll(routerModules)
                 }
             }.onFailure {
@@ -48,12 +46,23 @@ class TPageRouterModuleWriter private constructor(val currentPath: String) {
         file.createNewFile()
     }
 
-    fun append(path: String, moduleClassName: String) {
-        if (existRouterPaths.contains(path)) {
-            println("path $path already exists, ignored")
-            return
+    fun append(path: String, className: String, level: Int) {
+        val iterator = allRouterModules.iterator()
+        while (iterator.hasNext()) {
+            val existModule = iterator.next()
+            if (existModule.path == path) {
+                println("$path exist level is ${existModule.level}, current level is $level")
+                if (existModule.level > level) {
+                    println("ignore $className")
+                    return
+                } else {
+                    println("replace ${existModule.className} to $className")
+                    iterator.remove()
+                }
+            }
         }
-        allRouterModules.add(TPageRouterModuleBean(path, moduleClassName))
+
+        allRouterModules.add(TPageRouterModuleBean(path, className, level))
 
         val jsonStr = gson.toJson(allRouterModules)
         kotlin.runCatching {
@@ -66,13 +75,13 @@ class TPageRouterModuleWriter private constructor(val currentPath: String) {
     }
 
     companion object {
-        private var cachedFileWriter: TPageRouterModuleWriter? = null
+        private var cachedFileWriter: TTModuleWriter? = null
 
-        private const val ASSET_JSON_SUFFIX = "/src/main/assets/tpagerouter.json"
+        private const val ASSET_JSON_SUFFIX = "/src/main/assets/tt.json"
 
-        fun fromPath(path: String = "$currentProjectDir$ASSET_JSON_SUFFIX"): TPageRouterModuleWriter {
+        fun fromPath(path: String = "$currentProjectDir$ASSET_JSON_SUFFIX"): TTModuleWriter {
             if (null == cachedFileWriter || cachedFileWriter?.currentPath != path) {
-                cachedFileWriter = TPageRouterModuleWriter(path)
+                cachedFileWriter = TTModuleWriter(path)
             }
             return cachedFileWriter!!
         }
@@ -81,5 +90,6 @@ class TPageRouterModuleWriter private constructor(val currentPath: String) {
 
 data class TPageRouterModuleBean(
     val path: String,
-    val moduleClassName: String,
+    val className: String,
+    val level: Int
 )

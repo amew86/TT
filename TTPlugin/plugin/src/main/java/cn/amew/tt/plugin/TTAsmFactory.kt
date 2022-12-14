@@ -1,10 +1,9 @@
-package cn.amew.tpagerouter.plugin
+package cn.amew.tt.plugin
 
 import com.android.build.api.instrumentation.AsmClassVisitorFactory
 import com.android.build.api.instrumentation.ClassContext
 import com.android.build.api.instrumentation.ClassData
 import com.android.build.api.instrumentation.InstrumentationParameters
-import org.gradle.api.provider.Property
 import org.objectweb.asm.AnnotationVisitor
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.Opcodes
@@ -17,10 +16,10 @@ import org.objectweb.asm.Opcodes
  * Modified By:
  * Description:
  */
-abstract class TPageRouterAsmFactory: AsmClassVisitorFactory<InstrumentationParameters.None> {
+abstract class TTAsmFactory: AsmClassVisitorFactory<InstrumentationParameters.None> {
 
     override fun createClassVisitor(classContext: ClassContext, nextClassVisitor: ClassVisitor): ClassVisitor {
-        return TPageRouterClassVisitor(classContext, nextClassVisitor)
+        return TTClassVisitor(classContext, nextClassVisitor)
     }
 
     override fun isInstrumentable(classData: ClassData): Boolean {
@@ -39,33 +38,38 @@ abstract class TPageRouterAsmFactory: AsmClassVisitorFactory<InstrumentationPara
     }
 }
 
-class TPageRouterClassVisitor(
+class TTClassVisitor(
     private val classContext: ClassContext,
     nextVisitor: ClassVisitor
 ) : ClassVisitor(Opcodes.ASM5, nextVisitor) {
 
     override fun visitAnnotation(descriptor: String?, visible: Boolean): AnnotationVisitor {
-        if (descriptor == "Lcn/amew/tpagerouter/annotation/TPageRouter;") {
-            return TPageRouterAnnotationVisitor(classContext.currentClassData.className, api)
+        if (descriptor == "Lcn/amew/tt/annotation/TRoute;") {
+            return TTAnnotationVisitor(classContext.currentClassData.className, api)
         }
         return super.visitAnnotation(descriptor, visible)
     }
 }
 
-class TPageRouterAnnotationVisitor(
+class TTAnnotationVisitor(
     private val className: String,
     api: Int,
 ) : AnnotationVisitor(api) {
 
+    private var mPath: String? = null
+    private var mLevel: Int = 0
+
     override fun visit(name: String?, value: Any?) {
         super.visit(name, value)
-        if (name == "value" && value is String) {
-            TPageRouterModuleWriter.fromPath().append(value, className)
+        if (name == "path" && value is String) {
+            mPath = value
+        } else if (name == "level" && value is Int) {
+            mLevel = value
         }
     }
 
     override fun visitEnd() {
-        println("visit end")
+        mPath?.let { TTModuleWriter.fromPath().append(it, className, mLevel) }
         super.visitEnd()
     }
 }

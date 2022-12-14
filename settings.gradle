@@ -5,6 +5,18 @@ pluginManagement {
         mavenCentral()
     }
 }
+
+buildscript {
+    repositories {
+//        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.1'
+    }
+}
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -13,4 +25,11 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "TT"
-include ':_demo'
+include ':_demoapp'
+include ':_demolib'
+
+include ':tt_annotation'
+include ':tt_processor'
+include ':tt_core'
+
+includeBuild('./TTPlugin')

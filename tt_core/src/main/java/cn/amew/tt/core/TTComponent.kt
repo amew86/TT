@@ -3,9 +3,18 @@ package cn.amew.tt.core
 /**
  * Author:      A-mew
  * Create Date: Created in 2022/12/14 2:01 PM
- * Update Date: 
- * Modified By: 
- * Description: 
+ * Update Date:
+ * Modified By:
+ * Description:
  */
- class TTComponent {
+class TTComponent(path: String) {
+
+    operator fun invoke(params: HashMap<String, Any?>? = null, callback: () -> Unit) {
+
+    }
+
+    @Throws(Exception::class)
+    operator fun <T> invoke(params: HashMap<String, Any?>? = null): T? {
+        return null
+    }
 }

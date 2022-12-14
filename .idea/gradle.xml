@@ -3,16 +3,35 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/TTPlugin" name="TTPlugin">
+                <projects>
+                  <project path="$PROJECT_DIR$/TTPlugin" />
+                  <project path="$PROJECT_DIR$/TTPlugin/plugin" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/_demo" />
+            <option value="$PROJECT_DIR$/TTPlugin" />
+            <option value="$PROJECT_DIR$/TTPlugin/plugin" />
+            <option value="$PROJECT_DIR$/_demoapp" />
+            <option value="$PROJECT_DIR$/_demolib" />
+            <option value="$PROJECT_DIR$/tt_annotation" />
+            <option value="$PROJECT_DIR$/tt_core" />
+            <option value="$PROJECT_DIR$/tt_processor" />
           </set>
         </option>
       </GradleProjectSettings>
     </option>
+    <option name="offlineMode" value="true" />
   </component>
 </project>
