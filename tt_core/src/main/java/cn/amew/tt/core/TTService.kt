@@ -5,9 +5,9 @@ package cn.amew.tt.core
  * Create Date: Created in 2022/12/14 2:01 PM
  * Update Date:
  * Modified By:
- * Description:
+ * Description: use TT.service to create it
  */
-class TTService(path: String) {
+class TTService internal constructor(path: String) {
 
     operator fun invoke(params: HashMap<String, Any?>? = null) {
         

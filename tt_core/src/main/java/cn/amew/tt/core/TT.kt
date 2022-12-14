@@ -1,8 +1,6 @@
 package cn.amew.tt.core
 
 import android.content.Context
-import android.util.Log
-import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -43,5 +41,5 @@ object TT {
     /**
      *
      */
-    fun component(path: String) = TTComponent(path)
+    fun plugin(path: String) = TTPlugin(path)
 }
