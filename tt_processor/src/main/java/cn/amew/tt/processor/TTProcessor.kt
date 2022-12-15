@@ -44,7 +44,7 @@ class TTProcessor: AbstractProcessor() {
                 .build()
 
             val packageName = qualifiedName.substring(0, qualifiedName.lastIndexOf('.'))
-            println("packageName: $packageName, wrapperClassName: $wrapperClassName")
+//            println("packageName: $packageName, wrapperClassName: $wrapperClassName")
             val file = FileSpec.builder(packageName, wrapperClassName)
                 .addType(wrapperType)
                 .build()

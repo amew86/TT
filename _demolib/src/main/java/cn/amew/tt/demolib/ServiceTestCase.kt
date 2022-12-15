@@ -11,11 +11,11 @@ import cn.amew.tt.annotation.TTRoute
  * Modified By:
  * Description:
  */
-@TTRoute(
-    path = "testService",
-    type = RouteType.SERVICE
-)
-class TestService {
+//@TTRoute(
+//    path = "testService",
+//    type = RouteType.SERVICE
+//)
+class ServiceTestCase {
 
     fun test() {
         Log.e("TT", "test function in service")

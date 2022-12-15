@@ -62,6 +62,7 @@ class TTAnnotationVisitor(
     override fun visit(name: String?, value: Any?) {
         super.visit(name, value)
         if (name == "path" && value is String) {
+            println("name: $name, path: $value")
             mPath = value
         } else if (name == "level" && value is Int) {
             mLevel = value

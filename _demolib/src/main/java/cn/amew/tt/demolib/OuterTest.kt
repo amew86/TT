@@ -10,7 +10,7 @@ import cn.amew.tt.core.TT
  * Modified By:
  * Description:
  */
-object OuterTestCase {
+object OuterTest {
 
     fun testService() {
         TT.service("reverseService")?.invoke("testFun") {

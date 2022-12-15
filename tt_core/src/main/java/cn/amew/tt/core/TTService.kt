@@ -7,6 +7,7 @@ package cn.amew.tt.core
  * Modified By:
  * Description: use TT.service to create it
  */
+@Deprecated("useless")
 class TTService internal constructor(path: String) {
 
     operator fun invoke(params: HashMap<String, Any?>? = null) {

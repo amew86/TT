@@ -1,6 +1,7 @@
 package cn.amew.tt.core
 
 import android.content.Context
+import cn.amew.tt.wrapper.ITTServiceWrapper
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -12,6 +13,8 @@ import java.io.InputStreamReader
  * Description: core entrance
  */
 object TT {
+
+    private val allServiceWrappers = HashMap<String, ITTServiceWrapper<*>>()
 
     fun init(context: Context) {
         val jsonBuilder = StringBuilder()
@@ -36,7 +39,10 @@ object TT {
     /**
      *
      */
-    fun service(path: String) = TTPage(path)
+    @Suppress("UNCHECKED_CAST")
+    fun service(path: String): ITTServiceWrapper<*>? {
+        return allServiceWrappers[path]
+    }
 
     /**
      *
